@@ -1,4 +1,4 @@
-import React, { useState, useEffect ,useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Axios from 'axios';
 import { Card, Box, Grid, Container, Typography, List, ListItem, ListItemText, ListItemButton, Button, Checkbox } from '@mui/material';
 import { CheckCircleOutline, RadioButtonUnchecked } from '@mui/icons-material';
@@ -21,7 +21,7 @@ const Materials = () => {
   const [getNextMod, setGetNextMod] = useState([]);
   const [increment, setIncrement] = useState(1);
   const [isVideoPlaying, setIsVideoPlaying] = useState(true);
-  
+
   const { id } = useParams();
 
   const videoContainerRef = useRef(null);
@@ -82,7 +82,7 @@ const Materials = () => {
 
     checkForVideoElement();
   }, []);
-  
+
 
   const videoTimeElement = () => {
     try {
@@ -112,19 +112,19 @@ const Materials = () => {
       try {
         const response = await Axios.get(`http://localhost:8000/content/${id}`);
         const content = response.data.moduleContent;
-        const course  = response.data.courseData;
+        const course = response.data.courseData;
 
         if (content.length > 0) {
           setCourseIsData(course)
           setGetNextMod(content)
-           // Fetch and store data for all modules
+          // Fetch and store data for all modules
           const decodedData = JSON.parse(content[0].content);
           const decodedLessonAbout = decodedData.lessonAbout;
 
           setContentData(decodedLessonAbout);
-      
+
           setModuleIsData(content[0])
-          
+
         } else {
           console.log('No data found');
           setIsLoading(false);
@@ -141,11 +141,11 @@ const Materials = () => {
 
     try {
       await setIncrement(prevIncrement => prevIncrement + 1);
-  
+
       const decodedData = JSON.parse(getNextMod[increment].content);
-  
+
       const decodedLessonAbout = decodedData.lessonAbout;
-  
+
       setContentData(decodedLessonAbout);
       setCurrentTab(0);
       setSelectedLesson(0);
@@ -155,10 +155,10 @@ const Materials = () => {
     } catch (error) {
       console.error('An error occurred:', error);
 
-    } 
+    }
   };
-  
-  
+
+
   const getNextTab = () => {
 
     if (currentTab < contentData.length - 1) {
@@ -184,7 +184,7 @@ const Materials = () => {
         return newChecked;
       });
       setIsQuiz(true)
-        setCurrentTab(100)
+      setCurrentTab(100)
     }
   };
 
@@ -211,28 +211,28 @@ const Materials = () => {
 
   return (
     <Container maxWidth="xl">
-  
+
       {contentData.length > 0 ? (
         <>
           <Typography variant="h3" sx={{ mb: 1 }}>
-          {courseIsData[0].courseName}
+            {courseIsData[0].courseName}
           </Typography>
           <Box className="rate" sx={{ mb: 2 }}>
             <Typography component="label" htmlFor="" sx={{ margin: '0px 5px', color: '#00000085' }}>
-             {moduleIsData.moduleName}
+              {moduleIsData.moduleName}
             </Typography>
             <Typography component="label" htmlFor="">
               |
             </Typography>
             <Typography component="label" htmlFor="" sx={{ margin: '0px 10px', color: '#00000085' }}>
-            {moduleIsData.description}
+              {moduleIsData.description}
             </Typography>
           </Box>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} lg={8} ref={videoContainerRef} sx={{ height: '100vh' }}>
               <Card sx={{ mb: 2 }}>
                 <Box sx={{ p: 3 }}>
-                {isQuiz ? <QuizPage /> :  <VideoComponent videoSrc={contentData[selectedLesson].videoSrc} transcript={contentData[selectedLesson].transcript} />}
+                  {isQuiz ? <QuizPage /> : <VideoComponent videoSrc={contentData[selectedLesson].videoSrc} transcript={contentData[selectedLesson].transcript} />}
                 </Box>
               </Card>
             </Grid>
@@ -244,7 +244,7 @@ const Materials = () => {
                   </Typography>
 
                   <Typography variant="h5" component="h4" sx={{ justifyContent: 'center', display: 'flex' }}>
-                  {moduleIsData.moduleName}
+                    {moduleIsData.moduleName}
                   </Typography>
 
                   <List dense sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
@@ -257,8 +257,8 @@ const Materials = () => {
 
                       {contentData.map((lesson, lessonIndex) => (
                         <ListItem key={`lesson-${lessonIndex}`} disablePadding disabled={currentTab !== lessonIndex}
-                        sx={{ backgroundColor: currentTab === lessonIndex ? '#3333330F' : 'initial', color: currentTab === lessonIndex ? 'black' : 'initial', borderRight: currentTab === lessonIndex ? '7px solid #9900d1ab' : 'none', }}
-                          >
+                          sx={{ backgroundColor: currentTab === lessonIndex ? '#3333330F' : 'initial', color: currentTab === lessonIndex ? 'black' : 'initial', borderRight: currentTab === lessonIndex ? '7px solid #9900d1ab' : 'none', }}
+                        >
                           <ListItemButton onClick={() => setSelectedLesson(lessonIndex)} disabled={currentTab !== lessonIndex}>
                             <ListItemText>&nbsp; &nbsp; &nbsp; {lesson.lessonOverview}</ListItemText>
                             <Checkbox
@@ -276,18 +276,18 @@ const Materials = () => {
                 </Box>
               </Card>
               {currentTab === contentData.length - 1 ? (
-             <Button variant="contained" color="primary" onClick={getNextTab} sx={{ mt: 2 }} disabled={isVideoPlaying}>
-              Start quiz
-              </Button>
-            ) : currentTab === 100 ?
-              <Button variant="contained" color="primary" onClick={(event) => getNextModule(event, getNextMod)} sx={{ mt: 2 }} >
-                Next module
-              </Button>
-              : (
-              <Button variant="contained" color="primary" onClick={getNextTab} sx={{ mt: 2 }} disabled={isVideoPlaying}>
-                Next
-              </Button>
-              )} 
+                <Button variant="contained" color="primary" onClick={getNextTab} sx={{ mt: 2 }} disabled={isVideoPlaying}>
+                  Start quiz
+                </Button>
+              ) : currentTab === 100 ?
+                <Button variant="contained" color="primary" onClick={(event) => getNextModule(event, getNextMod)} sx={{ mt: 2 }} >
+                  Next module
+                </Button>
+                : (
+                  <Button variant="contained" color="primary" onClick={getNextTab} sx={{ mt: 2 }} disabled={isVideoPlaying}>
+                    Next
+                  </Button>
+                )}
             </Grid>
           </Grid>
         </>
@@ -306,13 +306,13 @@ const Materials = () => {
             src="/assets/illustrations/illustration_500.svg"
             sx={{ height: 260, mx: 'auto', my: { xs: 5, sm: 10 } }}
           />
-                
+
           <Button to="/" size="large" variant="contained" component={RouterLink}>
             Go to Home
           </Button>
         </StyledContent>
       )}
-  </Container>
+    </Container>
   );
 };
 

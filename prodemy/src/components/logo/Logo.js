@@ -33,13 +33,13 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
       sx={{
         height: 50,
         display: 'inline-flex',
-        justifyContent:'center',
-        width:"90%",
+        justifyContent: 'center',
+        width: "90%",
         ...sx,
       }}
       {...other}
     >
-      <img alt="Nike Air Force 1 NDESTRUKT" src="/assets/prodemy-logo/prodemy.png"/>
+      <img alt="Proweaver Academy" src="/assets/prodemy-logo/procad.svg" />
     </Box>
   );
 

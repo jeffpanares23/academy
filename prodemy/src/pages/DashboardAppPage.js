@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 // sections
 import {
- 
+
   AppTasks,
   AppNewsUpdate,
   AppOrderTimeline,
@@ -39,7 +39,7 @@ export default function DashboardAppPage() {
   return (
     <>
       <Helmet>
-        <title> Procademy | Minimal UI </title>
+        <title> Proweaver Academy </title>
       </Helmet>
 
       {delayed === true ? <LoaderDash /> : <> <Box maxWidth="100%">

@@ -35,10 +35,10 @@ const AboutHome = () => {
                 <Typography variant="h2" component="h2">Career Advancement Opportunities</Typography>
                 <Typography variant="body1" component="p">Just like courses taken in a traditional classroom setting, virtual learning can provide you with a number of career advancement opportunities. </Typography>
               </Box>
-              <Box className='text' sx={{ padding: "20px" }}>
+              {/* <Box className='text' sx={{ padding: "20px" }}>
                 <Typography variant="h2" component="h2">Benefits About Online Learning Expertise</Typography>
                 <Typography variant="body1" component="p">Flexibility</Typography>
-              </Box>
+              </Box> */}
             </Box>
           </Box>
         </Box>
