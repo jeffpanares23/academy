@@ -65,15 +65,15 @@ function VideoComponent({ videoSrc, transcript, subtitleSrc }) {
      }, []);
 
 
-     // useEffect(() => {
-     //      const preventRightClick = (event) => {
-     //           event.preventDefault(); // Prevent the default right-click context menu
-     //      };
-     //      window.addEventListener('contextmenu', preventRightClick);
-     //      return () => {
-     //           window.removeEventListener('contextmenu', preventRightClick);
-     //      };
-     // }, []);
+     useEffect(() => {
+          const preventRightClick = (event) => {
+               event.preventDefault();
+          };
+          window.addEventListener('contextmenu', preventRightClick);
+          return () => {
+               window.removeEventListener('contextmenu', preventRightClick);
+          };
+     }, []);
 
      return (
           <Box>
