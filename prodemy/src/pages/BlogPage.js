@@ -27,26 +27,26 @@ export default function BlogPage() {
   const coursedata = CourseData().courses;
   const storedUserId = sessionStorage.getItem('userId');
 
-  let posts = []; 
+  let posts = [];
 
   if (coursedata && coursedata.length > 0) {
-        posts = coursedata.map((course, index) => ({
-        id: course.id,
-        cover: `/assets/images/covers/cover_${index + 1}.jpg`,
-        title: course.courseName,
-        createdAt: course.date_created,
-        view: course.enrollees,
-        comment: faker.datatype.number(),
-        bookmark: course.id,
-        share: faker.datatype.number(),
-        favorite: faker.datatype.number(),
-        userID: storedUserId,
-        author: {
-          name: faker.name.fullName(),
-          avatarUrl: `/assets/images/avatars/avatar_${index + 1}.jpg`,
-        },
-      }));
-    }
+    posts = coursedata.map((course, index) => ({
+      id: course.id,
+      cover: `/assets/images/covers/cover_${index + 1}.jpg`,
+      title: course.courseName,
+      createdAt: course.date_created,
+      view: course.enrollees,
+      comment: faker.datatype.number(),
+      bookmark: course.id,
+      share: faker.datatype.number(),
+      favorite: faker.datatype.number(),
+      userID: storedUserId,
+      author: {
+        name: faker.name.fullName(),
+        avatarUrl: `/assets/images/avatars/avatar_${index + 1}.jpg`,
+      },
+    }));
+  }
 
   return (
     <>
@@ -55,11 +55,7 @@ export default function BlogPage() {
       </Helmet>
 
       <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-          <Typography variant="h4" gutterBottom>
-            Blog
-          </Typography>
-        </Stack>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3} />
 
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
           <BlogPostsSearch posts={posts} />

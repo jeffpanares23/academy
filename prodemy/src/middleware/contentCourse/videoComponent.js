@@ -112,7 +112,7 @@ function VideoComponent({ videoSrc, transcript, subtitleSrc }) {
                          />
                     </video>
                </Box>
-               <Box sx={{ p: 2, height: 'auto' }}>
+               <Box sx={{ height: 'auto' }}>
                     <Box sx={{ borderBottom: 1, borderColor: 'divider', background: '#fff', borderRadius: "12px 12px 0px 0px" }}>
                          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
                               <Tab label="Transcript" {...a11yProps(0)} />

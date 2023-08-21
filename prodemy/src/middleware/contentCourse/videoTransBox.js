@@ -1,5 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
-import { Box, Typography, List, ListItem, ListItemText, ListItemButton, Button, Checkbox } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { Box, Typography } from '@mui/material';
 
 function VideoTranscriptBox({ transcript, videoRef }) {
      const [highlightIndex, setHighlightIndex] = useState(-1);
@@ -22,46 +22,62 @@ function VideoTranscriptBox({ transcript, videoRef }) {
           };
      }, [videoRef, transcript]);
 
-     useEffect(() => {
-          const videoElement = videoRef.current;
+     // useEffect(() => {
+     //      const videoElement = videoRef.current;
 
-          const handleClick = () => {
-               const selectedLine = transcript.find(
-                    (line) => line.startTime <= videoElement.currentTime && videoElement.currentTime <= line.endTime
-               );
+     //      const handleClick = () => {
+     //           const selectedLine = transcript.find(
+     //                (line) => line.startTime <= videoElement.currentTime && videoElement.currentTime <= line.endTime
+     //           );
 
-               if (selectedLine) {
-                    videoElement.currentTime = selectedLine.startTime;
-               }
-          };
+     //           if (selectedLine) {
+     //                videoElement.currentTime = selectedLine.startTime;
+     //           }
+     //      };
 
-          videoElement.addEventListener('click', handleClick);
+     //      videoElement.addEventListener('click', handleClick);
 
-          return () => {
-               videoElement.removeEventListener('click', handleClick);
-          };
-     }, [videoRef, transcript]);
+     //      return () => {
+     //           videoElement.removeEventListener('click', handleClick);
+     //      };
+     // }, [videoRef, transcript]);
 
      // Filter the highlighted line based on highlightIndex
-     const highlightedLine = highlightIndex !== -1 ? transcript[highlightIndex] : null;
+     // const highlightedLine = highlightIndex !== -1 ? transcript[highlightIndex] : null;
 
      return (
-          <Box sx={{ textAlign: 'justify' }}>
-               {highlightedLine && (
-                    <Typography
-                         variant="body1"
-                         className="highlighted"
-                         style={{
-                              fontWeight: 600,
-                              padding: '5px',
-                              color: 'rgba(0, 0, 0, 0.75)',
-                         }}
-                    >
-                         {highlightedLine.text}
-                    </Typography>
-               )
-               }
-          </Box>
+          <>
+               {/* <Box sx={{ textAlign: 'justify' }}>
+                    {highlightedLine && (
+                         <Typography
+                              variant="body1"
+                              className="highlighted"
+                              style={{
+                                   fontWeight: 600,
+                                   padding: '5px',
+                                   color: 'rgba(0, 0, 0, 0.75)',
+                              }}
+                         >
+                              {highlightedLine.text}
+                         </Typography>
+                    )
+                    }
+               </Box> */}
+               <Box sx={{ textAlign: 'justify' }}>
+                    {transcript.map((line, index) => (
+                         <Typography
+                              key={index}
+                              variant="body1"
+                              style={{
+                                   padding: '5px',
+                                   color: 'rgba(0, 0, 0, 0.75)',
+                              }}
+                         >
+                              {line.text}
+                         </Typography>
+                    ))}
+               </Box>
+          </>
      );
 }
 
