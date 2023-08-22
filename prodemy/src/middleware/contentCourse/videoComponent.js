@@ -1,8 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Box, Typography, Tabs, Tab, Card, Grid, Link } from '@mui/material';
+import { Box, Typography, Tabs, Tab, Card, Grid, Link, Button } from '@mui/material';
 import videojs from 'video.js';
 import 'video.js/dist/video-js.css';
 import VideoTranscriptBox from './videoTransBox';
+import Iconify from '../../components/iconify';
 
 function UserProfileTabs(props) {
      const { children, value, index, ...other } = props;
@@ -35,6 +36,7 @@ function VideoComponent({ videoSrc, transcript, subtitleSrc }) {
      const [showTranscript, setShowTranscript] = useState(true);
      const [value, setValue] = React.useState(0);
      const videoRef = useRef(null);
+     const [isWideScreen, setIsWideScreen] = useState(false);
 
      const handleChange = (event, newValue) => {
           setValue(newValue);
@@ -65,22 +67,40 @@ function VideoComponent({ videoSrc, transcript, subtitleSrc }) {
      }, []);
 
 
-     useEffect(() => {
-          const preventRightClick = (event) => {
-               event.preventDefault();
-          };
-          window.addEventListener('contextmenu', preventRightClick);
-          return () => {
-               window.removeEventListener('contextmenu', preventRightClick);
-          };
-     }, []);
+     // useEffect(() => {
+     //      const preventRightClick = (event) => {
+     //           event.preventDefault();
+     //      };
+     //      window.addEventListener('contextmenu', preventRightClick);
+     //      return () => {
+     //           window.removeEventListener('contextmenu', preventRightClick);
+     //      };
+     // }, []);
+
+     const handleWideScreen = () => {
+          const videoContainer = videoRef.current.parentElement; // Adjust this if necessary
+          const videoRect = videoContainer.getBoundingClientRect();
+          const offsetTop = videoRect.top;
+
+          // Calculate the target scroll position based on the current isWideScreen state
+          const targetScrollPosition = isWideScreen ? 0 : window.scrollY + offsetTop;
+          // Calculate the target scroll position
+          // const targetScrollPosition = window.scrollY + offsetTop;
+
+          // Use smooth scrolling behavior
+          window.scrollTo({
+               top: targetScrollPosition,
+               behavior: 'smooth',
+          });
+          setIsWideScreen((prevIsWideScreen) => !prevIsWideScreen);
+     };
 
      return (
           <Box>
                <Box sx={{ width: '100%', paddingBottom: '56.25%', position: 'relative' }}>
                     <video
                          className="video-js vjs-default-skin vjs-big-play-centered"
-                         autoPlay
+                         // autoPlay
                          src={videoSrc}
                          type="video/mp4"
                          disablePictureInPicture={0}
@@ -119,6 +139,13 @@ function VideoComponent({ videoSrc, transcript, subtitleSrc }) {
                               <Tab label="Downloads" {...a11yProps(1)} />
                               <Tab label="Notes" {...a11yProps(2)} />
                               <Tab label="Discuss" {...a11yProps(3)} />
+                              <Button
+                                   startIcon={<Iconify icon={isWideScreen ? 'line-md:switch-off' : 'line-md:switch'} />} // Step 2: Update the icon based on isWideScreen
+                                   onClick={handleWideScreen}
+                                   sx={{ position: 'absolute', right: 0, top: 5 }}
+                              >
+                                   {isWideScreen ? 'Wide Screen Off' : 'Wide Screen On'} {/* Step 2: Update the button label */}
+                              </Button>
                          </Tabs>
                     </Box>
 
